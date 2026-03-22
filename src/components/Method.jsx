@@ -1,88 +1,122 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion'
 
 const methods = [
   {
-    id: "01",
-    title: "Component Architecture",
-    tool: "React.js / Vite",
-    description: "Building modular, reusable UI systems. I focus on clean prop-drilling solutions, custom hooks, and high-performance rendering."
+    num: '01',
+    title: 'Frontend Architecture',
+    body: 'Component-driven systems built for scale. Every decision — folder structure, state management, data flow — is made with the next engineer in mind.',
+    tags: ['React', 'Vite', 'JavaScript'],
   },
   {
-    id: "02",
-    title: "Kinetic Motion",
-    tool: "Framer Motion / GSAP",
-    description: "Creating 'alive' interfaces. I engineer scroll-triggered animations and state-based transitions that feel natural."
+    num: '02',
+    title: 'Kinetic Interaction',
+    body: 'Animation as communication, not decoration. GSAP ScrollTrigger sequences, spring physics, and micro-interactions that make users feel the interface.',
+    tags: ['GSAP', 'Framer Motion', 'CSS'],
   },
   {
-    id: "03",
-    title: "Responsive Systems",
-    tool: "Tailwind CSS",
-    description: "Precision-based styling. I build fluid layouts that maintain visual integrity from 4K monitors down to mobile devices."
+    num: '03',
+    title: 'Design Systems',
+    body: 'Bespoke design tokens, reusable component libraries, and dark-mode-first Tailwind configurations that keep teams aligned at any scale.',
+    tags: ['Tailwind', 'Figma', 'CSS'],
   },
   {
-    id: "04",
-    title: "State Engineering",
-    tool: "React Hooks / Context",
-    description: "Managing complex data flows. From habit tracking logic to e-commerce carts, I ensure data is synced and persistent."
-  }
-];
+    num: '04',
+    title: 'Performance First',
+    body: 'Lighthouse 100 is the baseline. Code splitting, lazy loading, optimised assets, and Core Web Vitals monitoring baked in from day one.',
+    tags: ['Vite', 'Vercel', 'Lighthouse'],
+  },
+]
 
 const Method = () => {
   return (
-    <section id="skills" className="py-32 px-[5%] bg-[#050505]">
-      <div className="max-w-7xl mx-auto">
-        
-        
-        <div className="flex flex-col mb-20">
-          <span className="text-indigo-500 font-bold tracking-[0.4em] text-[10px] uppercase mb-4">
-            Technical Philosophy
-          </span>
-          <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase">
-            The Method<span className="text-indigo-600">.</span>
+    <section id="skills" className="relative py-32 px-6" style={{ background: '#050505' }}>
+
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+        }}
+      />
+
+      <div className="relative max-w-6xl mx-auto">
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-20"
+        >
+          <p className="text-[10px] font-bold tracking-[0.45em] uppercase text-indigo-400 mb-4">
+            The Method
+          </p>
+          <h2
+            className="text-white font-black tracking-tighter leading-none"
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}
+          >
+            How I
+            <br />
+            <span style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)', color: 'transparent' }}>
+              engineer.
+            </span>
           </h2>
-        </div>
+        </motion.div>
 
-      
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-3xl overflow-hidden">
-          {methods.map((item) => (
-            <motion.div 
-              key={item.id}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 rounded-2xl overflow-hidden">
+          {methods.map((m, i) => (
+            <motion.div
+              key={m.num}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="bg-[#050505] p-10 md:p-16 group hover:bg-indigo-950/20 transition-all duration-500"
+              transition={{ duration: 0.7, delay: (i % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="group relative p-10 transition-all duration-500 hover:bg-white/[0.02]"
+              style={{ background: '#050505' }}
             >
-              <div className="flex justify-between items-start mb-10">
-                <span className="font-mono text-indigo-500 text-sm tracking-widest">
-                  // {item.id}
-                </span>
-                <div className="h-2 w-2 rounded-full bg-white/20 group-hover:bg-indigo-500 transition-colors" />
-              </div>
+              <div
+                className="absolute top-0 right-0 w-24 h-24 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: 'radial-gradient(circle at top right, rgba(99,102,241,0.07), transparent 70%)' }}
+              />
 
-              <h3 className="text-3xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-white/30 font-bold text-[10px] tracking-[0.2em] uppercase mb-6">
-                Expertise: {item.tool}
-              </p>
-              
-              <p className="text-white/50 leading-relaxed text-sm md:text-base max-w-sm">
-                {item.description}
-              </p>
+              <span
+                className="block font-black tracking-tighter mb-6 leading-none"
+                style={{
+                  fontSize: '4rem',
+                  color: 'transparent',
+                  WebkitTextStroke: '1px rgba(99,102,241,0.18)',
+                }}
+              >
+                {m.num}
+              </span>
+
+              <h3 className="text-white font-black tracking-tight text-2xl mb-4">{m.title}</h3>
+              <p className="text-white/40 text-sm leading-relaxed mb-6">{m.body}</p>
+
+              <div className="flex flex-wrap gap-2">
+                {m.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 text-[10px] font-bold tracking-wider uppercase rounded-full"
+                    style={{
+                      background: 'rgba(99,102,241,0.08)',
+                      color: 'rgba(129,140,248,0.8)',
+                      border: '0.5px solid rgba(99,102,241,0.15)',
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </motion.div>
           ))}
         </div>
-
-        
-        <div className="mt-12 text-center">
-          <p className="text-[9px] uppercase tracking-[0.6em] text-white/20 font-bold">
-            Frontend Specialist — Focused on the 1%
-          </p>
-        </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Method;
+export default Method

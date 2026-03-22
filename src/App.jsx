@@ -1,20 +1,23 @@
-import Navbar from "./components/Navbar";
-import Home from "./Pages/Home";
-import Footer from "./components/Footer";
-import useLenis from "./hooks/useLenis";
-import "./index.css";
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import Showcase from './components/Showcase'
+import Method from './components/Method'
+import About from './components/About'
+import Brief from './components/Brief'
+import Footer from './components/Footer'
 
 function App() {
-  useLenis();
-
   return (
-    <div className="relative bg-[#050505] antialiased min-h-screen">
+    <main style={{ background: '#050505' }}>
       <Navbar />
-      <Home />
-
+      <Hero />
+      <Showcase />
+      <Method />
+      <About />
+      <Brief />
       <Footer />
-    </div>
-  );
+    </main>
+  )
 }
 
-export default App;
+export default App

@@ -1,115 +1,181 @@
-import { motion } from "framer-motion";
+import { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { motion } from 'framer-motion'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const projects = [
   {
-    id: "01",
-    title: "VESTIGE",
-    category: "SNEAKER ECOSYSTEM",
-    image: "/project-vestige.jpg",
-    link: "https://vestige-edit.vercel.app",
-    description: "A high-performance React application for luxury footwear acquisition with dynamic state management."
+    id: '01',
+    name: 'Vestige',
+    category: 'Sneaker E-Commerce',
+    description: 'Premium sneaker marketplace with kinetic product reveals, 3D hover states, and a checkout flow that converts.',
+    tags: ['React', 'Framer Motion', 'Stripe'],
+    live: 'https://vestige-edit.vercel.app/',
+    accent: '#6366f1',
   },
   {
-    id: "02",
-    title: "E-MAX TRADE",
-    category: "FINANCIAL INTERFACE",
-    image: "/project-emax.jpg",
-    link: "https://e-max-trade-p3nd.vercel.app/",
-    description: "A sophisticated trading dashboard designed for real-time market data visualization and asset tracking."
+    id: '02',
+    name: 'E-Max Trade',
+    category: 'FinTech Platform',
+    description: 'Real-time trading dashboard with live candlestick charts, portfolio analytics, and zero-latency data feeds.',
+    tags: ['React', 'WebSocket', 'Chart.js'],
+    live: 'https://e-max-trade-p3nd.vercel.app/',
+    accent: '#10b981',
   },
   {
-    id: "03",
-    title: "HABIT TRACKER",
-    category: "PRODUCTIVITY SAAS",
-    image: "/project-habit.jpg",
-    link: "https://habit-tracker-six-virid-44.vercel.app/",
-    description: "A logic-heavy React utility focused on behavioral engineering and consistent data persistence."
-  }
-];
+    id: '03',
+    name: 'Habit Tracker',
+    category: 'SaaS Productivity',
+    description: 'Behaviour-change SaaS with streak mechanics, data visualisation, and a calm, focused UI built for daily use.',
+    tags: ['React', 'Supabase', 'D3'],
+    live: 'https://habit-tracker-six-virid-44.vercel.app/',
+    accent: '#f59e0b',
+  },
+]
 
 const Showcase = () => {
+  const sectionRef = useRef(null)
+  const cardsRef = useRef([])
+
+  useGSAP(() => {
+    cardsRef.current.forEach((card, i) => {
+      if (!card) return
+      gsap.fromTo(
+        card,
+        { opacity: 0, y: 60, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+          delay: i * 0.12,
+        }
+      )
+    })
+  }, [])
+
   return (
-    <section id="projects" className="py-32 px-[5%] bg-[#050505]">
-     
-      <div className="flex justify-between items-end mb-24 border-b border-white/10 pb-10">
-        <div>
-          <span className="text-indigo-500 font-bold tracking-[0.3em] text-xs uppercase">Selected Works</span>
-          <h2 className="text-6xl md:text-8xl font-black text-white mt-4 tracking-tighter">SHOWCASE</h2>
-        </div>
-        <p className="hidden md:block text-white/40 max-w-[320px] text-right text-sm leading-relaxed font-medium">
-          Engineering digital solutions across E-commerce, FinTech, and Productivity sectors.
-        </p>
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="relative py-32 px-6"
+      style={{ background: '#050505' }}
+    >
+      <div className="max-w-6xl mx-auto mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="text-[10px] font-bold tracking-[0.45em] uppercase text-indigo-400 mb-4">
+            Selected Work
+          </p>
+          <h2
+            className="text-white font-black tracking-tighter leading-none"
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}
+          >
+            Projects that
+            <br />
+            <span style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)', color: 'transparent' }}>
+              ship.
+            </span>
+          </h2>
+        </motion.div>
       </div>
 
-      
-      <div className="flex flex-col gap-40">
-        {projects.map((project, index) => (
-          <motion.div 
+      <div className="max-w-6xl mx-auto flex flex-col gap-6">
+        {projects.map((project, i) => (
+          <div
             key={project.id}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative grid grid-cols-1 md:grid-cols-12 gap-8 items-start"
+            ref={(el) => (cardsRef.current[i] = el)}
+            className="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.01]"
+            style={{
+              background: 'rgba(255,255,255,0.03)',
+              border: '0.5px solid rgba(255,255,255,0.07)',
+              backdropFilter: 'blur(12px)',
+            }}
           >
-            <div className="hidden md:block col-span-1 pt-2">
-              <span className="text-white/10 text-7xl font-black tracking-tighter group-hover:text-indigo-500/20 transition-colors duration-500">
+            <div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+              style={{
+                background: `radial-gradient(600px circle at 50% 50%, ${project.accent}08, transparent 70%)`,
+              }}
+            />
+
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-8 p-8 md:p-10">
+
+              <span
+                className="font-black tracking-tighter flex-shrink-0"
+                style={{
+                  fontSize: 'clamp(3rem, 6vw, 5rem)',
+                  color: 'transparent',
+                  WebkitTextStroke: `1px ${project.accent}40`,
+                  lineHeight: 1,
+                }}
+              >
                 {project.id}
               </span>
-            </div>
 
-            
-            <div className="col-span-1 md:col-span-7 relative overflow-hidden rounded-3xl border border-white/5 bg-white/5 aspect-video">
-              <a href={project.link} target="_blank" rel="noreferrer">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="w-full h-full relative"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60 z-10" />
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-700 grayscale-[50%] group-hover:grayscale-0"
-                  />
-                </motion.div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] font-bold tracking-[0.35em] uppercase mb-2" style={{ color: project.accent }}>
+                  {project.category}
+                </p>
+                <h3 className="text-white font-black tracking-tight mb-3" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)' }}>
+                  {project.name}
+                </h3>
+                <p className="text-white/40 text-sm leading-relaxed max-w-lg">
+                  {project.description}
+                </p>
+                <div className="flex flex-wrap gap-2 mt-5">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 text-[10px] font-bold tracking-wider uppercase rounded-full"
+                      style={{
+                        background: `${project.accent}12`,
+                        color: project.accent,
+                        border: `0.5px solid ${project.accent}25`,
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noreferrer"
+                className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 text-[11px] font-bold tracking-wider uppercase rounded-xl no-underline transition-all duration-300 group-hover:scale-105"
+                style={{
+                  background: `${project.accent}15`,
+                  color: project.accent,
+                  border: `0.5px solid ${project.accent}30`,
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                View Live
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2 10L10 2M10 2H5M10 2V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </a>
             </div>
-
-           
-            <div className="col-span-1 md:col-span-4 flex flex-col pt-4">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-[1px] w-8 bg-indigo-500" />
-                <span className="text-indigo-400 font-bold text-[10px] tracking-[0.3em] uppercase">
-                  {project.category}
-                </span>
-              </div>
-              
-              <h3 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight group-hover:text-indigo-400 transition-colors duration-300">
-                {project.title}
-              </h3>
-              
-              <p className="text-white/50 text-base mb-8 leading-relaxed font-light">
-                {project.description}
-              </p>
-
-              <div className="flex gap-6">
-                <a 
-                  href={project.link} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="group/link flex items-center gap-2 text-white font-bold text-xs tracking-widest uppercase border-b border-indigo-500/0 hover:border-indigo-500 pb-1 transition-all"
-                >
-                  Launch App
-                  <span className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-300">↗</span>
-                </a>
-              </div>
-            </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Showcase;
+export default Showcase

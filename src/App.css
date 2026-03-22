@@ -7,7 +7,6 @@
   --indigo-primary: #6366f1;
 }
 
-/* 1. Reset & Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -17,11 +16,10 @@
 body {
   background-color: var(--bg-dark);
   color: white;
-  overflow-x: hidden; /* Prevents horizontal shaking during animations */
+  overflow-x: hidden; 
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* 2. Custom "Aether" Scrollbar (Minimalist) */
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -39,12 +37,10 @@ body {
   background: var(--indigo-primary);
 }
 
-/* 3. The "Glass" Utility */
 .glass-panel {
   @apply bg-white/5 backdrop-blur-md border border-white/10;
 }
 
-/* 4. Smooth Scrolling Logic */
 html.lenis {
   height: auto;
 }
